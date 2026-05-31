@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Markdown Viewer</title>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+  @font-face { font-family:'Pretendard'; src:url('./fonts/PretendardVariable.ttf') format('truetype'); font-weight:100 900; }
+  @font-face { font-family:'PretendardJP'; src:url('./fonts/PretendardJPVariable.ttf') format('truetype'); font-weight:100 900; }
+  
+  @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-Regular.ttf') format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-SemiBold.ttf') format('truetype'); font-weight: 600; }
+  
+  @font-face { font-family: 'NotoSans-Italic-VariableFont_wdth,wght.ttf'; src: url('./fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSans-VariableFont_wdth,wght'; src: url('./fonts/NotoSans-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansKR-VariableFont_wght'; src: url('./fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansJP-VariableFont_wght'; src: url('./fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansSC-VariableFont_wght'; src: url('./fonts/NotoSansSC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansTC-VariableFont_wght'; src: url('./fonts/NotoSansTC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  
+  @font-face { font-family: 'NotoSerif-VariableFont_wdth,wght'; src: url('./fonts/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerif-Italic-VariableFont_wdth,wght'; src: url('./fonts/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifJP-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifJP-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifKR-VariableFont_wght'; src: url('./fonts/NotoSerifKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifSC-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifSC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifTC-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifTC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  
+  :root {
+    --black:#322823;
+  }
+  
+  body {
+    max-width: 900px;
+    margin: 0;
+    padding:0;
+    font-family: 'Pretendard', 'PretendardJP', 'NotoSans-VariableFont_wdth,wght', sans-serif;
+    background:#F1EFE5;
+    color:var(--black);
+    transition: font-family 0.2s ease; /* 폰트 전환을 부드럽게 */
+  }
+  
+
+  #viewer {
+    padding:20px;
+  }
+  
+  #viewer table,td,tr,th {
+    border:1px solid var(--black);
+    width:fit-content;
+    overflow-x:auto;
+  }
+
+  #header {
+    padding:20px;
+    line-height:1.3;
+  }
+    
+  #header h2, p {
+    margin:10px 0;
+  }
+
+  /* 폰트 선택기 스타일 */
+  .font-selector-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .font-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--black);
+    background-color: #fff;
+    color: var(--black);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    height:30px;
+  }
+
+  .font-btn.active {
+    background-color: var(--black);
+    color: #F1EFE5;
+  }
+
+  .font-preview-char {
+    font-size: 18px;
+    font-weight: bold;
+    border-right: 1px solid rgba(0,0,0,0.1);
+    padding-right: 6px;
+  }
+  .font-btn.active .font-preview-char {
+    border-right: 1px solid rgba(255,255,255,0.3);
+  }
+
+  #font-warning {
+    color: #bd3a3a;
+    font-size: 13px;
+    font-weight: 500;
+    display: none;
+  }
+  
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h2>마크다운 뷰어</h2>
+  <p>마크다운 파일을 올리면 바로 보여줍니다.</p>
+  
+  <input type="file" id="fileInput" accept=".md,.txt">
+
+  <div class="font-selector-container">
+    <button class="font-btn active" data-family="'Pretendard', 'PretendardJP', sans-serif">
+      <span class="font-preview-char" style="font-family: 'Pretendard';">가</span>
+      <span>Pretendard</span>
+    </button>
+    
+    <button class="font-btn" data-family="'NotoSans-VariableFont_wdth,wght', 'NotoSansTC-VariableFont_wdth,wght','NotoSansKR-VariableFont_wdth,wght','NotoSansJP-VariableFont_wdth,wght','NotoSansSC-VariableFont_wdth,wght',sans-serif">
+      <span class="font-preview-char" style="font-family: 'NotoSans-VariableFont_wdth,wght';">가</span>
+      <span>Noto Sans (본고딕)</span>
+    </button>
+    
+    <button class="font-btn" data-family="'NotoSerif-VariableFont_wdth,wght','NotoSerifKR-VariableFont_wght'">
+      <span class="font-preview-char" style="font-family: 'NotoSerifKR-VariableFont_wght','NotoSerifJP-VariableFont_wdth,wght','NotoSerifSC-VariableFont_wdth,wght','NotoSerifTC-VariableFont_wdth,wght',serif">가</span>
+      <span style="font-family:'NotoSerifKR-VariableFont_wght'">Noto Serif (본명조)</span>
+    </button>
+    
+    <button class="font-btn" data-family="'Eulyoo1945', serif" data-warning="true">
+      <span class="font-preview-char" style="font-family: 'Eulyoo1945';">가</span>
+      <span style="font-family:'Eulyoo1945'">을유1945</span>
+    </button>
+    
+    <button class="font-btn" data-family="system-ui;">
+      <span class="font-preview-char" style="font-family:system-ui;">가</span>
+      <span style="font-family:system-ui">시스템 기본</span>
+    </button>
+    
+    <span id="font-warning">⚠️ 해당 폰트는 일부 글자에서 깨짐 현상이 있을 수 있습니다.</span>
+  </div>
+
+  <hr>
+</div>
+  
+<div id="viewer"></div>
+
+<script>
+const input = document.getElementById("fileInput");
+const viewer = document.getElementById("viewer");
+const fontButtons = document.querySelectorAll(".font-btn");
+const fontWarning = document.getElementById("font-warning");
+
+function renderMarkdown(markdown) {
+    viewer.innerHTML = marked.parse(markdown);
+    localStorage.setItem("markdown", markdown);
+}
+
+const savedMarkdown = localStorage.getItem("markdown");
+
+if (savedMarkdown) {
+    renderMarkdown(savedMarkdown);
+}
+
+input.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        renderMarkdown(e.target.result);
+    };
+
+    reader.readAsText(file);
+});
+
+// 완전 자동화된 폰트 변경 이벤트 리스너
+fontButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        // 1. 활성화 스타일 토글
+        fontButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        // 2. 버튼의 data 속성에서 폰트 스택과 경고 여부를 가져옴
+        const targetFamily = button.getAttribute("data-family");
+        const hasWarning = button.getAttribute("data-warning") === "true";
+
+        // 3. body에 즉시 반영 및 경고문 제어 (if-else문 필요 없음)
+        document.body.style.fontFamily = targetFamily;
+        fontWarning.style.display = hasWarning ? "inline-block" : "none";
+    });
+});
+</script>
+
+</body>
+</html>
