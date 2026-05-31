@@ -13,19 +13,19 @@
   @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-Regular.ttf') format('truetype'); font-weight: 400; }
   @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-SemiBold.ttf') format('truetype'); font-weight: 600; }
   
-  @font-face { font-family: 'NotoSans-Italic-VariableFont_wdth,wght.ttf'; src: url('./fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSans-VariableFont_wdth,wght'; src: url('./fonts/NotoSans-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSansKR-VariableFont_wght'; src: url('./fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSansJP-VariableFont_wght'; src: url('./fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSansSC-VariableFont_wght'; src: url('./fonts/NotoSansSC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSansTC-VariableFont_wght'; src: url('./fonts/NotoSansTC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSans-Italic.ttf'; src: url('./fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSans'; src: url('./fonts/NotoSans-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansKR'; src: url('./fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansJP'; src: url('./fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansSC'; src: url('./fonts/NotoSansSC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSansTC'; src: url('./fonts/NotoSansTC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
   
-  @font-face { font-family: 'NotoSerif-VariableFont_wdth,wght'; src: url('./fonts/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSerif-Italic-VariableFont_wdth,wght'; src: url('./fonts/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSerifJP-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifJP-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSerifKR-VariableFont_wght'; src: url('./fonts/NotoSerifKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSerifSC-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifSC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
-  @font-face { font-family: 'NotoSerifTC-VariableFont_wdth,wght'; src: url('./fonts/NotoSerifTC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerif'; src: url('./fonts/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerif-Italic'; src: url('./fonts/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifJP'; src: url('./fonts/NotoSerifJP-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifKR'; src: url('./fonts/NotoSerifKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifSC'; src: url('./fonts/NotoSerifSC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'NotoSerifTC'; src: url('./fonts/NotoSerifTC-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
   
   :root {
     --black:#322823;
@@ -35,7 +35,7 @@
     max-width: 900px;
     margin: 0;
     padding:0;
-    font-family: 'Pretendard', 'PretendardJP', 'NotoSans-VariableFont_wdth,wght', sans-serif;
+    font-family: 'Pretendard', 'PretendardJP', 'NotoSans', sans-serif;
     background:#F1EFE5;
     color:var(--black);
     transition: font-family 0.2s ease; /* 폰트 전환을 부드럽게 */
@@ -123,17 +123,17 @@
       <span>Pretendard</span>
     </button>
     
-    <button class="font-btn" data-family="'NotoSans-VariableFont_wdth,wght', 'NotoSansTC-VariableFont_wdth,wght','NotoSansKR-VariableFont_wdth,wght','NotoSansJP-VariableFont_wdth,wght','NotoSansSC-VariableFont_wdth,wght',sans-serif">
-      <span class="font-preview-char" style="font-family: 'NotoSans-VariableFont_wdth,wght';">가</span>
+    <button class="font-btn" data-family="'NotoSans', 'NotoSansTC','NotoSansKR','NotoSansJP','NotoSansSC',sans-serif">
+      <span class="font-preview-char" style="font-family: 'NotoSans';">가</span>
       <span>Noto Sans (본고딕)</span>
     </button>
     
-    <button class="font-btn" data-family="'NotoSerif-VariableFont_wdth,wght','NotoSerifKR-VariableFont_wght'">
-      <span class="font-preview-char" style="font-family: 'NotoSerifKR-VariableFont_wght','NotoSerifJP-VariableFont_wdth,wght','NotoSerifSC-VariableFont_wdth,wght','NotoSerifTC-VariableFont_wdth,wght',serif">가</span>
+    <button class="font-btn" data-family="'NotoSerif','NotoSerifKR'">
+      <span class="font-preview-char" style="font-family: 'NotoSerifKR','NotoSerifJP','NotoSerifSC','NotoSerifTC'">가</span>
       <span style="font-family:'NotoSerifKR-VariableFont_wght'">Noto Serif (본명조)</span>
     </button>
     
-    <button class="font-btn" data-family="'Eulyoo1945', serif" data-warning="true">
+    <button class="font-btn" data-family="'Eulyoo1945'" data-warning="true">
       <span class="font-preview-char" style="font-family: 'Eulyoo1945';">가</span>
       <span style="font-family:'Eulyoo1945'">을유1945</span>
     </button>
