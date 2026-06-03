@@ -261,6 +261,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
   #viewer img {
     border-radius: 10px;
     width: 100%;
+    margin: 10px 0;
   }
 
   #viewer pre {
@@ -379,6 +380,8 @@ const fontButtons    = document.querySelectorAll(".font-btn");
 const fontWarning    = document.getElementById("font-warning");
 const copyMdBtn      = document.getElementById("copy-md-btn");
 const copyMdFeedback = document.getElementById("copy-md-feedback");
+
+marked.setOptions({ breaks: true });
 
 // ── 렌더링 ────────────────────────────────────────
 function renderMarkdown(markdown) {
