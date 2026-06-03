@@ -8,23 +8,19 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   
 <style>
   @font-face { font-family:'Pretendard'; src:url('./fonts/PretendardVariable.ttf') format('truetype'); font-weight:100 900; }
   @font-face { font-family:'PretendardJP'; src:url('./fonts/PretendardJPVariable.ttf') format('truetype'); font-weight:100 900; }
-  
   @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-Regular.ttf') format('truetype'); font-weight: 400; }
   @font-face { font-family: 'Eulyoo1945'; src: url('./fonts/Eulyoo1945-SemiBold.ttf') format('truetype'); font-weight: 600; }
-  
   @font-face { font-family: 'NotoSans-Italic'; src: url('./fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSans'; src: url('./fonts/NotoSans-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSansKR'; src: url('./fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSansJP'; src: url('./fonts/NotoSansJP-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSansSC'; src: url('./fonts/NotoSansSC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSansTC'; src: url('./fonts/NotoSansTC-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
-  
   @font-face { font-family: 'NotoSerif'; src: url('./fonts/NotoSerif-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSerif-Italic'; src: url('./fonts/NotoSerif-Italic-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
   @font-face { font-family: 'NotoSerifJP'; src: url('./fonts/NotoSerifJP-VariableFont_wdth,wght.ttf') format('truetype'); font-weight: 100 900; }
@@ -34,120 +30,33 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
   @font-face { font-family:'D2Coding'; src:url('./font/D2Coding.ttf') format('truetype'); font-weight:normal; }
   
   :root {
-    --black:#322823;
-    --grey:#ccc;
+    --black: #322823;
+    --grey: #ccc;
+    --bg: #F1EFE5;
+    --tab-bg: #E4E1D4;
+    --tab-active: #F1EFE5;
+    --tab-border: #c8c4b4;
   }
   
+  * { box-sizing: border-box; }
+
   body {
-    box-sizing:border-box;
     margin: 0;
-    padding:0;
+    padding: 0;
     font-family: 'Pretendard', 'PretendardJP', 'NotoSans', sans-serif;
-    background:#F1EFE5;
-    color:var(--black);
+    background: var(--bg);
+    color: var(--black);
     transition: font-family 0.2s ease;
   }
-  
-  #viewer {
-    padding:20px;
-  }
-  
-  #viewer .table-wrap {
-    overflow-x: auto;
-    max-width: 100%;
-    margin: 1em 0;
-  }
 
-  #viewer table {
-    border-collapse: collapse;
-    width: max-content;
-    min-width: 100%;
-  }
-
-  #viewer th, td {
-    border: 1px solid var(--black);
-    padding: 10px;
-    text-align:left;
-  }
-  
-  #viewer blockquote {
-    padding: 1px 20px;
-    margin:20px 0;
-    border-radius:5px;
-    position:relative;
-  }
-  
-  #viewer blockquote::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 6px;
-    background: var(--grey);
-    border-radius: 999px;
-  }
-  
-  #viewer ul,ol {
-    padding:0 20px;
-  }
-  
-  #viewer img {
-    border-radius:10px;
-    width:100%;
-  }
-  
-  #viewer pre {
-    width:100%;
-    box-sizing:border-box;
-    font-family:'D2Coding';
-    padding:0;
-    border-radius:0 0 0 8px;
-  }
-  
-  #viewer pre code.hljs {
-    border-radius:0 0 0 8px;
-  }
-  
-  .code-block {
-    margin: 1em 0;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  .code-block pre {
-    margin:0;
-  }
-  
-  .code-header {
-    height: 40px;
-    padding: 0 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1e1e1e;
-    color: var(--grey);
-    font-size: 14px;
-  }
-
-  .copy-btn {
-    border: none;
-    background: transparent;
-    color: #ccc;
-    cursor: pointer;
-  }
-
-  .copy-btn:hover {
-    color: white;
-  }
-
+  /* ── 헤더 ── */
   #header {
-    padding:20px;
-    line-height:1.3;
+    padding: 20px 20px 0;
+    line-height: 1.3;
   }
-    
-  #header h2, p {
-    margin:10px 0;
+
+  #header h2, #header p {
+    margin: 10px 0;
   }
 
   .font-selector-container {
@@ -170,12 +79,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
-    height:30px;
+    height: 30px;
   }
 
   .font-btn.active {
     background-color: var(--black);
-    color: #F1EFE5;
+    color: var(--bg);
   }
 
   .font-preview-char {
@@ -184,6 +93,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     border-right: 1px solid rgba(0,0,0,0.1);
     padding-right: 6px;
   }
+
   .font-btn.active .font-preview-char {
     border-right: 1px solid rgba(255,255,255,0.3);
   }
@@ -208,160 +118,492 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     display: none;
   }
 
+  /* ── 탭 영역 ── */
+  #tab-bar-wrapper {
+    margin-top: 18px;
+    border-bottom: 2px solid var(--tab-border);
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: fit-content;
+    scrollbar-width: thin;
+    scrollbar-color: var(--tab-border) transparent;
+  }
+
+  #tab-bar-wrapper::-webkit-scrollbar {
+    height: auto;
+  }
+  #tab-bar-wrapper::-webkit-scrollbar-thumb {
+    background: var(--tab-border);
+    border-radius: 2px;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    max-width: 200px;
+    background: var(--tab-bg);
+    color: #666;
+    transition: background 0.15s, color 0.15s;
+    position: relative;
+    bottom: -2px;
+    user-select: none;
+  }
+
+  .tab:hover {
+    background: #dedad0;
+    color: var(--black);
+  }
+
+  .tab.active {
+    background: var(--tab-active);
+    color: var(--black);
+    border-color: var(--tab-border);
+    font-weight: 600;
+  }
+
+  .tab-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+  }
+
+  .tab-close {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tab-close:hover {
+    background: rgba(0,0,0,0.12);
+    color: var(--black);
+  }
+
+  /* 탭이 없을 때 안내 */
+  #tab-empty-hint {
+    padding: 6px 0 10px;
+    font-size: 13px;
+    color: #999;
+    display: none;
+  }
+
+  /* ── 뷰어 ── */
+  #viewer {
+    padding: 20px;
+    display: none;
+  }
+
+  #viewer.visible {
+    display: block;
+  }
+
+  #viewer .table-wrap {
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 1em 0;
+  }
+
+  #viewer table {
+    border-collapse: collapse;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  #viewer th, #viewer td {
+    border: 1px solid var(--black);
+    padding: 10px;
+    text-align: left;
+  }
+
+  #viewer blockquote {
+    padding: 1px 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  #viewer blockquote::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--grey);
+    border-radius: 999px;
+  }
+
+  #viewer ul, #viewer ol {
+    padding: 0 20px;
+  }
+
+  #viewer img {
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  #viewer pre {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'D2Coding';
+    padding: 0;
+    border-radius: 0 0 0 8px;
+  }
+
+  #viewer pre code.hljs {
+    border-radius: 0 0 0 8px;
+  }
+
+  .code-block {
+    margin: 1em 0;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .code-block pre { margin: 0; }
+
+  .code-header {
+    height: 40px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e1e1e;
+    color: var(--grey);
+    font-size: 14px;
+  }
+
+  .copy-btn {
+    border: none;
+    background: transparent;
+    color: #ccc;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover { color: white; }
+
+  /* ── 푸터 ── */
+  #footer {
+    padding: 20px;
+    font-size: 12px;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
-  <div id="header">
-    <h2>마크다운 뷰어</h2>
-    <p>markdown/txt 파일을 올리면 바로 보여줍니다.</p>
-  
-    <input type="file" id="fileInput" accept=".md,.txt">
 
-    <div class="font-selector-container">
-      <button class="font-btn active" data-family="'Pretendard', 'PretendardJP'">
-        <span class="font-preview-char" style="font-family: 'Pretendard';">가</span>
-        <span>Pretendard</span>
-      </button>
-    
-      <button class="font-btn" data-family="'NotoSans', 'NotoSansTC','NotoSansKR','NotoSansJP','NotoSansSC'">
-        <span class="font-preview-char" style="font-family: 'NotoSans';">가</span>
-        <span>Noto Sans (본고딕)</span>
-      </button>
-    
-      <button class="font-btn" data-family="'NotoSerif','NotoSerifKR'">
-        <span class="font-preview-char" style="font-family: 'NotoSerifKR','NotoSerifJP','NotoSerifSC','NotoSerifTC'">가</span>
-        <span style="font-family:'NotoSerifKR'">Noto Serif (본명조)</span>
-      </button>
-    
-      <button class="font-btn" data-family="'Eulyoo1945'" data-warning="true">
-        <span class="font-preview-char" style="font-family: 'Eulyoo1945';">가</span>
-        <span style="font-family:'Eulyoo1945'">을유1945</span>
-      </button>
-    
-      <button class="font-btn" data-family="system-ui">
-        <span class="font-preview-char" style="font-family:system-ui;">가</span>
-        <span style="font-family:system-ui">시스템 기본</span>
-      </button>
-    
-      <span id="font-warning">⚠️ 해당 폰트는 일부 글자에서 깨짐 현상이 있을 수 있습니다.</span>
-    </div>
+<div id="header">
+  <h2>마크다운 뷰어</h2>
+  <p>markdown/txt 파일을 올리면 바로 보여줍니다. 여러 파일을 한꺼번에 선택할 수 있습니다.</p>
 
-    <div class="copy-md-container">
-      <button id="copy-md-btn" class="font-btn" style="margin-top:5px;">
-        📋 본문 마크다운 복사
-      </button>
-      <span id="copy-md-feedback">✔ 복사됐습니다!</span>
-    </div>
+  <input type="file" id="fileInput" accept=".md,.txt" multiple>
 
-    <hr>
+  <div class="font-selector-container">
+    <button class="font-btn active" data-family="'Pretendard', 'PretendardJP'">
+      <span class="font-preview-char" style="font-family:'Pretendard';">가</span>
+      <span>Pretendard</span>
+    </button>
+    <button class="font-btn" data-family="'NotoSans','NotoSansTC','NotoSansKR','NotoSansJP','NotoSansSC'">
+      <span class="font-preview-char" style="font-family:'NotoSans';">가</span>
+      <span>Noto Sans (본고딕)</span>
+    </button>
+    <button class="font-btn" data-family="'NotoSerif','NotoSerifKR'">
+      <span class="font-preview-char" style="font-family:'NotoSerifKR','NotoSerifJP','NotoSerifSC','NotoSerifTC'">가</span>
+      <span style="font-family:'NotoSerifKR'">Noto Serif (본명조)</span>
+    </button>
+    <button class="font-btn" data-family="'Eulyoo1945'" data-warning="true">
+      <span class="font-preview-char" style="font-family:'Eulyoo1945';">가</span>
+      <span style="font-family:'Eulyoo1945'">을유1945</span>
+    </button>
+    <button class="font-btn" data-family="system-ui">
+      <span class="font-preview-char" style="font-family:system-ui;">가</span>
+      <span style="font-family:system-ui">시스템 기본</span>
+    </button>
+    <span id="font-warning">⚠️ 해당 폰트는 일부 글자에서 깨짐 현상이 있을 수 있습니다.</span>
   </div>
-  
-  <div id="viewer"></div>
-  
-  <hr>
-  
-  <div style="padding:20px; font-size:12px; text-align:center;">
-    버그 제보 및 개선 제안, 각종 문의: raon120378@gmail.com<br>
+
+  <div class="copy-md-container">
+    <button id="copy-md-btn" class="font-btn" style="margin-top:5px;">
+      📋 본문 마크다운 복사
+    </button>
+    <span id="copy-md-feedback">✔ 복사됐습니다!</span>
   </div>
+
+  <!-- 탭 바 -->
+  <div id="tab-bar-wrapper">
+    <!-- 탭 없을 때 안내 문구 -->
+    <span id="tab-empty-hint">파일을 불러오면 여기에 탭이 생깁니다.</span>
+  </div>
+</div>
+
+<div id="viewer"></div>
+
+<hr>
+<div id="footer">
+  버그 제보 및 개선 제안, 각종 문의: raon120378@gmail.com
+</div>
 
 <script>
-const input = document.getElementById("fileInput");
-const viewer = document.getElementById("viewer");
-const fontButtons = document.querySelectorAll(".font-btn");
-const fontWarning = document.getElementById("font-warning");
-const copyMdBtn = document.getElementById("copy-md-btn");
+// ── 상태 ──────────────────────────────────────────
+const tabs = [];          // { id, name, content }
+let activeTabId = null;
+let tabCounter  = 0;
+
+// ── DOM 참조 ──────────────────────────────────────
+const fileInput      = document.getElementById("fileInput");
+const viewer         = document.getElementById("viewer");
+const tabBarWrapper  = document.getElementById("tab-bar-wrapper");
+const tabEmptyHint   = document.getElementById("tab-empty-hint");
+const fontButtons    = document.querySelectorAll(".font-btn");
+const fontWarning    = document.getElementById("font-warning");
+const copyMdBtn      = document.getElementById("copy-md-btn");
 const copyMdFeedback = document.getElementById("copy-md-feedback");
 
+// ── 렌더링 ────────────────────────────────────────
 function renderMarkdown(markdown) {
-    viewer.innerHTML = marked.parse(markdown);
-  
-    document.querySelectorAll("#viewer table").forEach(table => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "table-wrap";
-        table.parentNode.insertBefore(wrapper, table);
-        wrapper.appendChild(table);
+  viewer.innerHTML = marked.parse(markdown);
+  viewer.classList.add("visible");
+
+  // 테이블 래핑
+  viewer.querySelectorAll("table").forEach(table => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrap";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
+  // 코드블록 처리
+  viewer.querySelectorAll("pre code").forEach(code => {
+    hljs.highlightElement(code);
+
+    const pre     = code.parentElement;
+    const wrapper = document.createElement("div");
+    wrapper.className = "code-block";
+
+    const header = document.createElement("div");
+    header.className = "code-header";
+
+    const lang =
+      [...code.classList].find(c => c.startsWith("language-"))
+        ?.replace("language-", "") || "text";
+
+    header.innerHTML = `<span>${lang}</span><button class="copy-btn">Copy</button>`;
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(header);
+    wrapper.appendChild(pre);
+
+    header.querySelector(".copy-btn").addEventListener("click", () => {
+      navigator.clipboard.writeText(code.innerText);
     });
-
-    document.querySelectorAll("pre code").forEach((code) => {
-        hljs.highlightElement(code);
-
-        const pre = code.parentElement;
-        const wrapper = document.createElement("div");
-        wrapper.className = "code-block";
-
-        const header = document.createElement("div");
-        header.className = "code-header";
-
-        const lang =
-            [...code.classList]
-                .find(c => c.startsWith("language-"))
-                ?.replace("language-", "")
-            || "text";
-
-        header.innerHTML = `
-            <span>${lang}</span>
-            <button class="copy-btn">Copy</button>
-        `;
-
-        pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(header);
-        wrapper.appendChild(pre);
-
-        header.querySelector(".copy-btn").addEventListener("click", () => {
-            navigator.clipboard.writeText(code.innerText);
-        });
-    });
-
-    localStorage.setItem("markdown", markdown);
-}
-  
-const savedMarkdown = localStorage.getItem("markdown");
-if (savedMarkdown) {
-    renderMarkdown(savedMarkdown);
+  });
 }
 
-input.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+// ── 탭 UI 갱신 ────────────────────────────────────
+function renderTabs() {
+  // 기존 탭 엘리먼트 제거 (hint 제외)
+  tabBarWrapper.querySelectorAll(".tab").forEach(el => el.remove());
 
+  if (tabs.length === 0) {
+    tabEmptyHint.style.display = "inline";
+    viewer.classList.remove("visible");
+    viewer.innerHTML = "";
+    return;
+  }
+
+  tabEmptyHint.style.display = "none";
+
+  tabs.forEach(tab => {
+    const el = document.createElement("div");
+    el.className = "tab" + (tab.id === activeTabId ? " active" : "");
+    el.dataset.id = tab.id;
+
+    el.innerHTML = `
+      <span class="tab-name" title="${tab.name}">${tab.name}</span>
+      <button class="tab-close" title="닫기">✕</button>
+    `;
+
+    // 탭 클릭 → 활성화
+    el.addEventListener("click", (e) => {
+      if (e.target.classList.contains("tab-close")) return;
+      switchTab(tab.id);
+    });
+
+    // ✕ 클릭 → 탭 닫기
+    el.querySelector(".tab-close").addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeTab(tab.id);
+    });
+
+    tabBarWrapper.appendChild(el);
+  });
+}
+
+// ── 탭 전환 ──────────────────────────────────────
+function switchTab(id) {
+  activeTabId = id;
+  renderTabs();
+
+  const tab = tabs.find(t => t.id === id);
+  if (tab) {
+    renderMarkdown(tab.content);
+    // localStorage에 현재 탭 내용 저장 (기존 복사 기능 호환)
+    localStorage.setItem("markdown", tab.content);
+    localStorage.setItem("activeTabId", id);
+  }
+}
+
+// ── 탭 닫기 ──────────────────────────────────────
+function closeTab(id) {
+  const idx = tabs.findIndex(t => t.id === id);
+  if (idx === -1) return;
+
+  tabs.splice(idx, 1);
+  localStorage.removeItem("tab_" + id);
+
+  if (activeTabId === id) {
+    // 옆 탭으로 포커스 이동
+    const next = tabs[idx] || tabs[idx - 1];
+    activeTabId = next ? next.id : null;
+    if (activeTabId) {
+      renderTabs();
+      switchTab(activeTabId);
+      return;
+    }
+  }
+
+  renderTabs();
+  if (!activeTabId) {
+    viewer.classList.remove("visible");
+    viewer.innerHTML = "";
+  }
+
+  saveTabList();
+}
+
+// ── localStorage 저장/복원 ───────────────────────
+function saveTabList() {
+  localStorage.setItem("tabList", JSON.stringify(
+    tabs.map(t => ({ id: t.id, name: t.name }))
+  ));
+  localStorage.setItem("tabCounter", tabCounter);
+}
+
+function saveTabContent(tab) {
+  try {
+    localStorage.setItem("tab_" + tab.id, tab.content);
+  } catch (e) {
+    console.warn("localStorage 저장 실패 (용량 초과 가능):", e);
+  }
+}
+
+function restoreTabs() {
+  const listRaw = localStorage.getItem("tabList");
+  if (!listRaw) return;
+
+  const list = JSON.parse(listRaw);
+  tabCounter = parseInt(localStorage.getItem("tabCounter") || "0", 10);
+
+  list.forEach(meta => {
+    const content = localStorage.getItem("tab_" + meta.id);
+    if (content !== null) {
+      tabs.push({ id: meta.id, name: meta.name, content });
+    }
+  });
+
+  const savedActive = localStorage.getItem("activeTabId");
+  const validActive = tabs.find(t => t.id === savedActive);
+  activeTabId = validActive ? savedActive : (tabs[0]?.id ?? null);
+
+  if (activeTabId) {
+    renderTabs();
+    switchTab(activeTabId);
+  } else {
+    renderTabs();
+  }
+}
+
+// ── 파일 입력 ────────────────────────────────────
+fileInput.addEventListener("change", (event) => {
+  const files = [...event.target.files];
+  if (!files.length) return;
+
+  let lastId = null;
+
+  const readNext = (i) => {
+    if (i >= files.length) {
+      fileInput.value = ""; // 동일 파일 재선택 허용
+      saveTabList();
+      switchTab(lastId);
+      return;
+    }
+
+    const file = files[i];
     const reader = new FileReader();
     reader.onload = (e) => {
-        renderMarkdown(e.target.result);
+      const content = e.target.result;
+      tabCounter++;
+      const id = "tab_" + tabCounter;
+      const tab = { id, name: file.name, content };
+      tabs.push(tab);
+      saveTabContent(tab);
+      lastId = id;
+      readNext(i + 1);
     };
     reader.readAsText(file);
+  };
+
+  readNext(0);
 });
 
-// 폰트 선택
+// ── 폰트 선택 ────────────────────────────────────
 fontButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        fontButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-
-        const targetFamily = button.getAttribute("data-family");
-        const hasWarning = button.getAttribute("data-warning") === "true";
-
-        document.body.style.fontFamily = targetFamily;
-        fontWarning.style.display = hasWarning ? "inline-block" : "none";
-    });
+  button.addEventListener("click", () => {
+    fontButtons.forEach(btn => btn.classList.remove("active"));
+    button.classList.add("active");
+    document.body.style.fontFamily = button.getAttribute("data-family");
+    fontWarning.style.display =
+      button.getAttribute("data-warning") === "true" ? "inline-block" : "none";
+  });
 });
 
-// 본문 마크다운 복사
+// ── 마크다운 복사 ─────────────────────────────────
 let feedbackTimer = null;
-
 copyMdBtn.addEventListener("click", () => {
-    const markdown = localStorage.getItem("markdown");
-    if (!markdown) return;
-
-    navigator.clipboard.writeText(markdown).then(() => {
-        copyMdFeedback.style.display = "inline";
-
-        if (feedbackTimer) clearTimeout(feedbackTimer);
-        feedbackTimer = setTimeout(() => {
-            copyMdFeedback.style.display = "none";
-        }, 2000);
-    });
+  const tab = tabs.find(t => t.id === activeTabId);
+  if (!tab) return;
+  navigator.clipboard.writeText(tab.content).then(() => {
+    copyMdFeedback.style.display = "inline";
+    if (feedbackTimer) clearTimeout(feedbackTimer);
+    feedbackTimer = setTimeout(() => {
+      copyMdFeedback.style.display = "none";
+    }, 2000);
+  });
 });
-</script>
 
+// ── 초기화 ───────────────────────────────────────
+restoreTabs();
+if (tabs.length === 0) tabEmptyHint.style.display = "inline";
+</script>
 </body>
 </html>
