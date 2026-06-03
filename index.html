@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Markdown Viewer</title>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -206,30 +207,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     color: green;
     display: none;
   }
-  
-  /* 기본 = 모바일 */
-  .container {
-    width: 100%;
-  }
-
-  /* 태블릿 이상 */
-  @media (min-width: 768px) {
-    .container {
-      width: 750px;
-    }
-  }
-
-  /* PC 이상 */
-  @media (min-width: 1200px) {
-    .container {
-      width: 1140px;
-    }
-  }
 
 </style>
 </head>
 <body>
-<div class="container">
   <div id="header">
     <h2>마크다운 뷰어</h2>
     <p>markdown/txt 파일을 올리면 바로 보여줍니다.</p>
@@ -282,7 +263,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
   <div style="padding:20px; font-size:12px; text-align:center;">
     버그 제보 및 개선 제안, 각종 문의: raon120378@gmail.com<br>
   </div>
-</div>
 
 <script>
 const input = document.getElementById("fileInput");
