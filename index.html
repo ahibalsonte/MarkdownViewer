@@ -206,82 +206,82 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     color: green;
     display: none;
   }
-
+  
   /* 기본 = 모바일 */
-.container {
-  width: 100%;
-}
-
-/* 태블릿 이상 */
-@media (min-width: 768px) {
   .container {
-    width: 750px;
+    width: 100%;
   }
-}
 
-/* PC 이상 */
-@media (min-width: 1200px) {
-  .container {
-    width: 1140px;
+  /* 태블릿 이상 */
+  @media (min-width: 768px) {
+    .container {
+      width: 750px;
+    }
   }
-}
+
+  /* PC 이상 */
+  @media (min-width: 1200px) {
+    .container {
+      width: 1140px;
+    }
+  }
 </style>
 </head>
 <body>
-
-<div id="header">
-  <h2>마크다운 뷰어</h2>
-  <p>markdown/txt 파일을 올리면 바로 보여줍니다.</p>
+<div class="container">
+  <div id="header">
+    <h2>마크다운 뷰어</h2>
+    <p>markdown/txt 파일을 올리면 바로 보여줍니다.</p>
   
-  <input type="file" id="fileInput" accept=".md,.txt">
+    <input type="file" id="fileInput" accept=".md,.txt">
 
-  <div class="font-selector-container">
-    <button class="font-btn active" data-family="'Pretendard', 'PretendardJP'">
-      <span class="font-preview-char" style="font-family: 'Pretendard';">가</span>
-      <span>Pretendard</span>
-    </button>
+    <div class="font-selector-container">
+      <button class="font-btn active" data-family="'Pretendard', 'PretendardJP'">
+        <span class="font-preview-char" style="font-family: 'Pretendard';">가</span>
+        <span>Pretendard</span>
+      </button>
     
-    <button class="font-btn" data-family="'NotoSans', 'NotoSansTC','NotoSansKR','NotoSansJP','NotoSansSC'">
-      <span class="font-preview-char" style="font-family: 'NotoSans';">가</span>
-      <span>Noto Sans (본고딕)</span>
-    </button>
+      <button class="font-btn" data-family="'NotoSans', 'NotoSansTC','NotoSansKR','NotoSansJP','NotoSansSC'">
+        <span class="font-preview-char" style="font-family: 'NotoSans';">가</span>
+        <span>Noto Sans (본고딕)</span>
+      </button>
     
-    <button class="font-btn" data-family="'NotoSerif','NotoSerifKR'">
-      <span class="font-preview-char" style="font-family: 'NotoSerifKR','NotoSerifJP','NotoSerifSC','NotoSerifTC'">가</span>
-      <span style="font-family:'NotoSerifKR'">Noto Serif (본명조)</span>
-    </button>
+      <button class="font-btn" data-family="'NotoSerif','NotoSerifKR'">
+        <span class="font-preview-char" style="font-family: 'NotoSerifKR','NotoSerifJP','NotoSerifSC','NotoSerifTC'">가</span>
+        <span style="font-family:'NotoSerifKR'">Noto Serif (본명조)</span>
+      </button>
     
-    <button class="font-btn" data-family="'Eulyoo1945'" data-warning="true">
-      <span class="font-preview-char" style="font-family: 'Eulyoo1945';">가</span>
-      <span style="font-family:'Eulyoo1945'">을유1945</span>
-    </button>
+      <button class="font-btn" data-family="'Eulyoo1945'" data-warning="true">
+        <span class="font-preview-char" style="font-family: 'Eulyoo1945';">가</span>
+        <span style="font-family:'Eulyoo1945'">을유1945</span>
+      </button>
     
-    <button class="font-btn" data-family="system-ui">
-      <span class="font-preview-char" style="font-family:system-ui;">가</span>
-      <span style="font-family:system-ui">시스템 기본</span>
-    </button>
+      <button class="font-btn" data-family="system-ui">
+        <span class="font-preview-char" style="font-family:system-ui;">가</span>
+        <span style="font-family:system-ui">시스템 기본</span>
+      </button>
     
-    <span id="font-warning">⚠️ 해당 폰트는 일부 글자에서 깨짐 현상이 있을 수 있습니다.</span>
+      <span id="font-warning">⚠️ 해당 폰트는 일부 글자에서 깨짐 현상이 있을 수 있습니다.</span>
+    </div>
+
+    <div class="copy-md-container">
+      <button id="copy-md-btn" class="font-btn" style="margin-top:5px;">
+        📋 본문 마크다운 복사
+      </button>
+      <span id="copy-md-feedback">✔ 복사됐습니다!</span>
+    </div>
+
+    <hr>
   </div>
-
-  <div class="copy-md-container">
-    <button id="copy-md-btn" class="font-btn" style="margin-top:5px;">
-      📋 본문 마크다운 복사
-    </button>
-    <span id="copy-md-feedback">✔ 복사됐습니다!</span>
-  </div>
-
+  
+  <div id="viewer"></div>
+  
   <hr>
+  
+  <div style="padding:20px; font-size:12px; text-align:center;">
+    버그 제보 및 개선 제안, 각종 문의: raon120378@gmail.com<br>
+  </div>
 </div>
-  
-<div id="viewer"></div>
-  
-<hr>
-  
-<div style="padding:20px; font-size:12px; text-align:center;">
-  버그 제보 및 개선 제안, 각종 문의: raon120378@gmail.com<br>
-</div>
-
 
 <script>
 const input = document.getElementById("fileInput");
