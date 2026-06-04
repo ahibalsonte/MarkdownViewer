@@ -6,6 +6,7 @@
 <title>Markdown Viewer</title>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.5/dist/purify.min.js"></script>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
@@ -59,6 +60,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     margin: 10px 0;
   }
 
+  #drop-zone {
+    margin-top: 14px;
+    border: 2px dashed var(--tab-border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+  }
+
+  #drop-zone:hover,
+  #drop-zone.drag-over {
+    background: #f0f0f0;
+    border-color: var(--black);
+  }
+
+  #drop-label {
+    font-size: 14px;
+    color: #666;
+    pointer-events: none;
+  }
+
+  #drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
   .font-selector-container {
     margin-top: 15px;
     display: flex;
@@ -110,12 +143,72 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   #copy-md-feedback {
     font-size: 13px;
     color: green;
     display: none;
+  }
+
+  /* ── 편집기 ── */
+  #editor-area {
+    display: none;
+    padding: 20px;
+  }
+
+  #editor-area.visible {
+    display: block;
+  }
+
+  #md-editor {
+    width: 100%;
+    min-height: 60vh;
+    padding: 16px;
+    font-family: 'D2Coding', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    background: #fff;
+    color: var(--black);
+    border: 1.5px solid var(--tab-border);
+    border-radius: 8px;
+    resize: vertical;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  #md-editor:focus {
+    border-color: var(--black);
+  }
+
+  .editor-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .editor-toolbar .font-btn {
+    font-size: 13px;
+    height: 28px;
+    padding: 4px 10px;
+  }
+
+  #save-feedback {
+    font-size: 13px;
+    color: green;
+    display: none;
+  }
+
+  /* 탭에 수정 표시 점 */
+  .tab.dirty .tab-name::after {
+    content: ' ●';
+    font-size: 9px;
+    color: #bd3a3a;
+    vertical-align: middle;
   }
 
   /* ── 탭 영역 ── */
@@ -319,7 +412,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
   <h2>마크다운 뷰어</h2>
   <p>markdown/txt 파일을 올리면 바로 보여줍니다. 여러 파일을 한꺼번에 선택할 수 있습니다.</p>
 
-  <input type="file" id="fileInput" accept=".md,.txt" multiple>
+  <div style="display:flex; gap:10px; align-items:stretch; margin-top:14px;">
+    <div id="drop-zone" style="margin-top:0; flex:1;">
+      <span id="drop-label">📂 파일을 여기에 드래그하거나 클릭해서 선택</span>
+      <input type="file" id="fileInput" accept=".md,.txt" multiple>
+    </div>
+    <button id="new-doc-btn" class="font-btn" style="white-space:nowrap; height:auto;">
+      ✏️ 새 문서 작성
+    </button>
+  </div>
 
   <div class="font-selector-container">
     <button class="font-btn active" data-family="'Pretendard', 'PretendardJP'">
@@ -349,6 +450,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     <button id="copy-md-btn" class="font-btn" style="margin-top:5px;">
       📋 본문 마크다운 복사
     </button>
+    <button id="edit-mode-btn" class="font-btn" style="margin-top:5px;">
+      ✏️ 편집 모드
+    </button>
+    <button id="save-md-btn" class="font-btn" style="margin-top:5px;">
+      💾 .md 저장
+    </button>
+    <button id="save-txt-btn" class="font-btn" style="margin-top:5px;">
+      💾 .txt 저장
+    </button>
     <span id="copy-md-feedback">✔ 복사됐습니다!</span>
   </div>
 
@@ -357,6 +467,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
     <!-- 탭 없을 때 안내 문구 -->
     <span id="tab-empty-hint">파일을 불러오면 여기에 탭이 생깁니다.</span>
   </div>
+</div>
+
+<!-- 편집기 영역 -->
+<div id="editor-area">
+  <div class="editor-toolbar">
+    <button id="editor-preview-btn" class="font-btn">👁 미리보기로 전환</button>
+    <span id="save-feedback">✔ 저장됐습니다!</span>
+  </div>
+  <textarea id="md-editor" placeholder="마크다운을 입력하세요..."></textarea>
 </div>
 
 <div id="viewer"></div>
@@ -371,22 +490,41 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-
 const tabs = [];          // { id, name, content }
 let activeTabId = null;
 let tabCounter  = 0;
+let isEditMode  = false;
+let editorDirty = false; // 현재 탭 미저장 변경 있음
 
 // ── DOM 참조 ──────────────────────────────────────
-const fileInput      = document.getElementById("fileInput");
-const viewer         = document.getElementById("viewer");
-const tabBarWrapper  = document.getElementById("tab-bar-wrapper");
-const tabEmptyHint   = document.getElementById("tab-empty-hint");
-const fontButtons    = document.querySelectorAll(".font-btn");
-const fontWarning    = document.getElementById("font-warning");
-const copyMdBtn      = document.getElementById("copy-md-btn");
-const copyMdFeedback = document.getElementById("copy-md-feedback");
+const fileInput         = document.getElementById("fileInput");
+const viewer            = document.getElementById("viewer");
+const editorArea        = document.getElementById("editor-area");
+const mdEditor          = document.getElementById("md-editor");
+const tabBarWrapper     = document.getElementById("tab-bar-wrapper");
+const tabEmptyHint      = document.getElementById("tab-empty-hint");
+const fontButtons       = document.querySelectorAll(".font-btn");
+const fontWarning       = document.getElementById("font-warning");
+const copyMdBtn         = document.getElementById("copy-md-btn");
+const copyMdFeedback    = document.getElementById("copy-md-feedback");
+const editModeBtn       = document.getElementById("edit-mode-btn");
+const saveMdBtn         = document.getElementById("save-md-btn");
+const saveTxtBtn        = document.getElementById("save-txt-btn");
+const editorPreviewBtn  = document.getElementById("editor-preview-btn");
+const saveFeedback      = document.getElementById("save-feedback");
+const dropZone          = document.getElementById("drop-zone");
 
 marked.setOptions({ breaks: true });
 
-// ── 렌더링 ────────────────────────────────────────
+// ── HTML 차단 렌더링 ──────────────────────────────
 function renderMarkdown(markdown) {
-  viewer.innerHTML = marked.parse(markdown);
+  const rawHtml = marked.parse(markdown);
+  // DOMPurify로 <script>, 인라인 이벤트, <iframe> 등 차단
+  const cleanHtml = DOMPurify.sanitize(rawHtml, {
+    FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'input'],
+    FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus',
+                  'onblur', 'onchange', 'onsubmit', 'onkeydown', 'onkeyup',
+                  'onkeypress', 'style']
+  });
+
+  viewer.innerHTML = cleanHtml;
   viewer.classList.add("visible");
 
   // 테이블 래핑
@@ -423,14 +561,95 @@ function renderMarkdown(markdown) {
   });
 }
 
+// ── 편집/미리보기 모드 전환 ───────────────────────
+function setEditMode(on) {
+  isEditMode = on;
+  if (on) {
+    const tab = tabs.find(t => t.id === activeTabId);
+    mdEditor.value = tab ? tab.content : "";
+    editorDirty = false;
+    editorArea.classList.add("visible");
+    viewer.classList.remove("visible");
+    editModeBtn.classList.add("active");
+    editModeBtn.textContent = "👁 미리보기 모드";
+  } else {
+    editorArea.classList.remove("visible");
+    editModeBtn.classList.remove("active");
+    editModeBtn.textContent = "✏️ 편집 모드";
+    // 저장되지 않은 내용이 있으면 탭에 dirty 표시 유지
+    const tab = tabs.find(t => t.id === activeTabId);
+    if (tab) {
+      renderMarkdown(tab.content);
+      viewer.classList.add("visible");
+    }
+  }
+}
+
+// 실시간 입력 → dirty 상태 표시
+mdEditor.addEventListener("input", () => {
+  if (!editorDirty) {
+    editorDirty = true;
+    // 탭 dirty 표시
+    const tabEl = tabBarWrapper.querySelector(`.tab[data-id="${activeTabId}"]`);
+    if (tabEl) tabEl.classList.add("dirty");
+  }
+  // 실시간 미리보기: viewer에 실시간 반영 (편집기 아래 보임 없이 내부 상태만)
+  // 원하면 split view로 확장 가능
+});
+
+// 미리보기로 전환 (현재 내용 자동 저장 후 전환)
+editorPreviewBtn.addEventListener("click", () => {
+  applyEditorContent();
+});
+
+function applyEditorContent() {
+  const content = mdEditor.value;
+  const tab = tabs.find(t => t.id === activeTabId);
+  if (!tab) return;
+
+  tab.content = content;
+  saveTabContent(tab);
+  localStorage.setItem("markdown", content);
+  editorDirty = false;
+
+  const tabEl = tabBarWrapper.querySelector(`.tab[data-id="${activeTabId}"]`);
+  if (tabEl) tabEl.classList.remove("dirty");
+
+  setEditMode(false);
+}
+
+// 헤더의 편집 모드 버튼
+editModeBtn.addEventListener("click", () => {
+  if (!activeTabId) return;
+  setEditMode(!isEditMode);
+});
+
+// ── .md 파일 저장 ──────────────────────────────────
+function downloadFile(ext, mimeType) {
+  const tab = tabs.find(t => t.id === activeTabId);
+  if (!tab) return;
+  const content  = isEditMode ? mdEditor.value : tab.content;
+  const blob     = new Blob([content], { type: mimeType + ";charset=utf-8" });
+  const url      = URL.createObjectURL(blob);
+  const a        = document.createElement("a");
+  a.href         = url;
+  const baseName = tab.name.replace(/\.(md|txt)$/i, "");
+  a.download     = baseName + ext;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+saveMdBtn.addEventListener("click",  () => downloadFile(".md",  "text/markdown"));
+saveTxtBtn.addEventListener("click", () => downloadFile(".txt", "text/plain"));
+
 // ── 탭 UI 갱신 ────────────────────────────────────
 function renderTabs() {
-  // 기존 탭 엘리먼트 제거 (hint 제외)
   tabBarWrapper.querySelectorAll(".tab").forEach(el => el.remove());
 
   if (tabs.length === 0) {
     tabEmptyHint.style.display = "inline";
     viewer.classList.remove("visible");
+    editorArea.classList.remove("visible");
     viewer.innerHTML = "";
     return;
   }
@@ -447,13 +666,11 @@ function renderTabs() {
       <button class="tab-close" title="닫기">✕</button>
     `;
 
-    // 탭 클릭 → 활성화
     el.addEventListener("click", (e) => {
       if (e.target.classList.contains("tab-close")) return;
       switchTab(tab.id);
     });
 
-    // ✕ 클릭 → 탭 닫기
     el.querySelector(".tab-close").addEventListener("click", (e) => {
       e.stopPropagation();
       closeTab(tab.id);
@@ -465,13 +682,27 @@ function renderTabs() {
 
 // ── 탭 전환 ──────────────────────────────────────
 function switchTab(id) {
+  // 편집 중이고 미저장 내용 있으면 자동 저장
+  if (isEditMode && editorDirty && activeTabId) {
+    const prev = tabs.find(t => t.id === activeTabId);
+    if (prev) {
+      prev.content = mdEditor.value;
+      saveTabContent(prev);
+    }
+  }
+
   activeTabId = id;
+  isEditMode  = false;
+  editorDirty = false;
+  editorArea.classList.remove("visible");
+  editModeBtn.classList.remove("active");
+  editModeBtn.textContent = "✏️ 편집 모드";
+
   renderTabs();
 
   const tab = tabs.find(t => t.id === id);
   if (tab) {
     renderMarkdown(tab.content);
-    // localStorage에 현재 탭 내용 저장 (기존 복사 기능 호환)
     localStorage.setItem("markdown", tab.content);
     localStorage.setItem("activeTabId", id);
   }
@@ -486,7 +717,6 @@ function closeTab(id) {
   localStorage.removeItem("tab_" + id);
 
   if (activeTabId === id) {
-    // 옆 탭으로 포커스 이동
     const next = tabs[idx] || tabs[idx - 1];
     activeTabId = next ? next.id : null;
     if (activeTabId) {
@@ -499,6 +729,7 @@ function closeTab(id) {
   renderTabs();
   if (!activeTabId) {
     viewer.classList.remove("visible");
+    editorArea.classList.remove("visible");
     viewer.innerHTML = "";
   }
 
@@ -548,21 +779,19 @@ function restoreTabs() {
 }
 
 // ── 파일 입력 ────────────────────────────────────
-fileInput.addEventListener("change", (event) => {
-  const files = [...event.target.files];
+function loadFiles(files) {
   if (!files.length) return;
-
   let lastId = null;
 
   const readNext = (i) => {
     if (i >= files.length) {
-      fileInput.value = ""; // 동일 파일 재선택 허용
+      fileInput.value = "";
       saveTabList();
       switchTab(lastId);
       return;
     }
-
     const file = files[i];
+    if (!/\.(md|txt)$/i.test(file.name)) { readNext(i + 1); return; }
     const reader = new FileReader();
     reader.onload = (e) => {
       const content = e.target.result;
@@ -578,16 +807,36 @@ fileInput.addEventListener("change", (event) => {
   };
 
   readNext(0);
+}
+
+fileInput.addEventListener("change", (e) => loadFiles([...e.target.files]));
+
+// 드래그앤드롭
+dropZone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZone.classList.add("drag-over");
+});
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+dropZone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("drag-over");
+  loadFiles([...e.dataTransfer.files]);
 });
 
 // ── 폰트 선택 ────────────────────────────────────
 fontButtons.forEach(button => {
   button.addEventListener("click", () => {
-    fontButtons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
-    document.body.style.fontFamily = button.getAttribute("data-family");
-    fontWarning.style.display =
-      button.getAttribute("data-warning") === "true" ? "inline-block" : "none";
+    // font-btn 중 헤더 버튼만 active 처리 (editor toolbar 버튼 제외)
+    document.querySelectorAll(".font-selector-container .font-btn").forEach(btn => btn.classList.remove("active"));
+    if (button.closest(".font-selector-container")) {
+      button.classList.add("active");
+    }
+    const family = button.getAttribute("data-family");
+    if (family) {
+      document.body.style.fontFamily = family;
+      fontWarning.style.display =
+        button.getAttribute("data-warning") === "true" ? "inline-block" : "none";
+    }
   });
 });
 
@@ -596,7 +845,8 @@ let feedbackTimer = null;
 copyMdBtn.addEventListener("click", () => {
   const tab = tabs.find(t => t.id === activeTabId);
   if (!tab) return;
-  navigator.clipboard.writeText(tab.content).then(() => {
+  const content = isEditMode ? mdEditor.value : tab.content;
+  navigator.clipboard.writeText(content).then(() => {
     copyMdFeedback.style.display = "inline";
     if (feedbackTimer) clearTimeout(feedbackTimer);
     feedbackTimer = setTimeout(() => {
@@ -608,6 +858,20 @@ copyMdBtn.addEventListener("click", () => {
 // ── 초기화 ───────────────────────────────────────
 restoreTabs();
 if (tabs.length === 0) tabEmptyHint.style.display = "inline";
+
+// ── 새 문서 작성 ──────────────────────────────────
+const newDocBtn = document.getElementById("new-doc-btn");
+newDocBtn.addEventListener("click", () => {
+  tabCounter++;
+  const id  = "tab_" + tabCounter;
+  const tab = { id, name: `새 문서 ${tabCounter}.md`, content: "" };
+  tabs.push(tab);
+  saveTabContent(tab);
+  saveTabList();
+  activeTabId = id;
+  renderTabs();
+  setEditMode(true);
+});
 </script>
 </body>
 </html>
